@@ -8,6 +8,7 @@ import Login from "../Login/Login";
 import Register from "../Register/Register";
 import PublicHabit from "../PublicHabit/PublicHabit";
 import HabitDetails from "../HabitDetails/HabitDetails";
+import NotFound from "../NotFound/NotFound";
 
 
 
@@ -53,7 +54,12 @@ export const router = createBrowserRouter([
       <PrivateRoute>
         <HabitDetails />
       </PrivateRoute>
-          }
+          },
+
+           {
+        path: "*",
+        element: <NotFound/>,
+      },
     ]
 
     
