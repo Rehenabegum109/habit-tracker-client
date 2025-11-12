@@ -7,6 +7,7 @@ import MyHabits from "../MyHabits/MyHabits";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import PublicHabit from "../PublicHabit/PublicHabit";
+import HabitDetails from "../HabitDetails/HabitDetails";
 
 
 
@@ -45,7 +46,14 @@ export const router = createBrowserRouter([
         {
             path:'register',
             element:<Register/>
-        }
+        },
+          {
+    path: "/habit/:id",
+    element: 
+      <PrivateRoute>
+        <HabitDetails />
+      </PrivateRoute>
+          }
     ]
 
     
