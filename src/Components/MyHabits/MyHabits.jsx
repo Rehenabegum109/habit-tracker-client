@@ -4,6 +4,7 @@ import { AuthContext } from "../Contexts/AuthContexts";
 
 import { toast } from "react-toastify";
 import UpdateHabits from "./UpdateHabits";
+import Spinner from "../Spineer/Spineer";
 
 const MyHabits = () => {
   const { user } = useContext(AuthContext);
@@ -28,7 +29,7 @@ const MyHabits = () => {
     if (user?.email) fetchHabits();
   }, [user]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Spinner/>
 
   // Delete Habit
   const handleDelete = async (habitId) => {

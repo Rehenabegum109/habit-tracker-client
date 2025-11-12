@@ -122,6 +122,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
+import Spinner from "../Spineer/Spineer";
 
 const HabitDetails = () => {
   const { id } = useParams();
@@ -151,7 +152,7 @@ const HabitDetails = () => {
     }
   };
 
-  if (!habit) return <p>Loading...</p>;
+  if (!habit) return <Spinner/>;
 
   
   const totalDays = 30;
@@ -169,7 +170,7 @@ const HabitDetails = () => {
       <p className="text-gray-600 mb-4">{habit.description}</p>
       <p className="mb-2"><strong>Category:</strong> {habit.category}</p>
 
-      {/* ✅ Progress bar */}
+      {/* Progress bar */}
       <div className="w-full bg-gray-200 rounded-full h-4 mb-3">
         <div
           className="bg-green-500 h-4 rounded-full"
@@ -182,7 +183,7 @@ const HabitDetails = () => {
 
       
       <p className="bg-yellow-300 inline-block px-3 py-1 rounded-full mb-3">
-        🔥 Current Streak: {habit.currentStreak || completedDays}
+        🔥Current Streak: {habit.currentStreak || completedDays}
       </p>
 
       
@@ -193,7 +194,7 @@ const HabitDetails = () => {
   
       <button
         onClick={handleMarkComplete}
-        className="mt-5 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+        className="mt-5 bg-[#58B19F]  text-white px-4 py-2 rounded"
       >
         Mark Complete
       </button>

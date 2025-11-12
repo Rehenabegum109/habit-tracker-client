@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import Spinner from "../Spineer/Spineer";
 
 const PublicHabits = () => {
   const [habits, setHabits] = useState([]);
   const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("http://localhost:3000/habits/public")
       .then(res => res.json())
-      .then(data => setHabits(data))
-      .catch(err => console.error(err));
+      .then(data => {
+        setHabits(data);
+        setLoading(false); 
+      })
+          .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
-
+    if (loading) return <Spinner/>;
   return (
     <div className="max-w-6xl mx-auto p-4">
       <h2 className="text-3xl font-bold mb-4">Public Habits</h2>

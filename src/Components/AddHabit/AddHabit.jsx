@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../Contexts/AuthContexts"; 
 import { toast } from "react-toastify";
+import Spinner from "../Spineer/Spineer";
 
 const AddHabit = () => {
   const { user } = useContext(AuthContext); 
@@ -10,8 +11,10 @@ const AddHabit = () => {
   const [category, setCategory] = useState("Morning");
   const [reminderTime, setReminderTime] = useState("");
   const [photoURL, setPhotoURL] = useState("");
+    const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
+      
     e.preventDefault();
 
     const habitData = {
@@ -27,21 +30,24 @@ const AddHabit = () => {
     };
 
     try {
+            setLoading(true);
       await axios.post("http://localhost:3000/habits", habitData);
       toast.success("Habit added successfully!");
 
-      // Reset form
+      
       setTitle("");
       setDescription("");
       setCategory("Morning");
       setReminderTime("");
       setPhotoURL("");
+          setLoading(false);
     } catch (err) {
+          setLoading(false);
       toast.error("Failed to add habit");
       console.error(err);
     }
   };
-
+  if (loading) return <Spinner/>;
   return (
     <div className="max-w-xl mx-auto p-4 shadow-md rounded-md ">
       <h2 className="text-4xl font-bold mb-4">Add a New Habit</h2>
