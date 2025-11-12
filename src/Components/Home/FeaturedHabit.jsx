@@ -9,7 +9,7 @@ const FeaturedHabits = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch("http://localhost:3000/habits/featured")
+    fetch(`http://localhost:3000/habits?featured=true`)
       .then((res) => res.json())
       .then((data) => setHabits(data))
       .catch((err) => console.error(err));

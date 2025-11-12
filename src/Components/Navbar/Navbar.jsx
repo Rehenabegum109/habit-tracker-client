@@ -38,12 +38,12 @@ const Navbar = () => {
       </NavLink>
 
       <NavLink
-        to="/browse"
+        to="/public-habit"
         className={({ isActive }) =>
           isActive ? "text-black font-bold" : "hover:text-gray-600"
         }
       >
-        Browse Public Habits
+      Public Habits
       </NavLink>
     </div>
   );

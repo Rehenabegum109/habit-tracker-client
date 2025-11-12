@@ -6,6 +6,9 @@ import PrivateRoute from "../privetRoute/pivetRoute";
 import MyHabits from "../MyHabits/MyHabits";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
+import PublicHabit from "../PublicHabit/PublicHabit";
+
+
 
 
 export const router = createBrowserRouter([
@@ -30,6 +33,10 @@ export const router = createBrowserRouter([
             element:<PrivateRoute>
                 <MyHabits/>
             </PrivateRoute>
+        },
+        {
+            path:"public-habit",
+            element:<PublicHabit/>
         },
         {
             path:"login",
