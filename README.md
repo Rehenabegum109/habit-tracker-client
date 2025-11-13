@@ -1,6 +1,6 @@
 # 🌿 My Daily Habit
 
-**Live Site:**
+**Live Site:**https://poetic-flan-c66ee4.netlify.app/
 
 ---
 
