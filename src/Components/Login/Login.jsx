@@ -105,7 +105,7 @@ const Login = () => {
         </button>
 
          <p className="text-center mt-5 text-gray-600">
-  You don’t have an account?{" "}
+  Don’t have an account?{" "}
   <Link to="/register" className="text-black font-semibold hover:underline">
     Register
   </Link>
@@ -116,3 +116,6 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
