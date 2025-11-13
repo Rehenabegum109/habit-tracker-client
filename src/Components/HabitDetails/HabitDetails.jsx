@@ -1,45 +1,48 @@
+
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"; 
 import Lottie from "lottie-react";
 import { motion } from "framer-motion";
 import Spinner from "../Spineer/Spineer";
-import successAnimation from "../../Animation/success.json"
-
+import successAnimation from "../../Animation/success.json";
 
 const HabitDetails = () => {
   const { id } = useParams();
   const [habit, setHabit] = useState(null);
   const [showAnimation, setShowAnimation] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Fetch habit by ID
   useEffect(() => {
     axios
       .get(`http://localhost:3000/habits/${id}`)
       .then((res) => setHabit(res.data))
-      .catch(() => toast.error("Failed to load habit"));
+      .catch(() => toast.error("Failed to load habit")); 
   }, [id]);
 
-  // Handle Mark Complete
+  
   const handleMarkComplete = async () => {
+    setLoading(true);
     try {
       const res = await axios.patch(`http://localhost:3000/habits/${id}/complete`);
 
       if (res.data.success) {
-        toast.success(res.data.message || "Marked complete!");
         setHabit(res.data.updatedHabit);
 
-        
+        // Show Lottie success animation
         setShowAnimation(true);
         setTimeout(() => setShowAnimation(false), 2000);
       } else {
-        toast.info(res.data.message || "Already marked complete today");
+        toast.error(res.data.message || "Could not mark as complete"); 
       }
     } catch (error) {
       console.error(error);
-      toast.error("Failed to mark complete");
+      toast.error("Failed to mark complete"); 
     }
+    setLoading(false);
   };
 
   if (!habit) return <Spinner />;
@@ -55,19 +58,10 @@ const HabitDetails = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      {/* Lottie Animation */}
+      {/* Lottie Animation Overlay */}
       {showAnimation && (
-        <div
-          style={{
-            position: "absolute",
-            top: "10%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: 150,
-            zIndex: 50,
-          }}
-        >
-          <Lottie animationData={successAnimation} loop={false} />
+        <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
+          <Lottie animationData={successAnimation} loop={false} autoplay={true} style={{ width: 200, height: 200 }} />
         </div>
       )}
 
@@ -83,7 +77,6 @@ const HabitDetails = () => {
         <strong>Category:</strong> {habit.category || "N/A"}
       </p>
 
-      
       <div className="w-full bg-gray-200 rounded-full h-4 mb-3">
         <div
           className="bg-green-500 h-4 rounded-full transition-all duration-500"
@@ -94,7 +87,6 @@ const HabitDetails = () => {
         Progress: {completedDays} / {totalDays} days ({progress.toFixed(0)}%)
       </p>
 
-      
       <p className="bg-yellow-300 inline-block px-3 py-1 rounded-full mb-3">
         🔥 Current Streak: {habit.currentStreak || completedDays} days
       </p>
@@ -106,12 +98,14 @@ const HabitDetails = () => {
       {/* Mark Complete Button */}
       <button
         onClick={handleMarkComplete}
-        className="mt-5 bg-[#58B19F] text-white px-4 py-2 rounded hover:bg-[#3d8c7a] transition-colors"
+        disabled={loading}
+        className="mt-5 bg-[#58B19F] text-white px-4 py-2 rounded hover:bg-[#3d8c7a] transition-colors disabled:opacity-50"
       >
-        Mark Complete
+        {loading ? "Processing..." : "Mark Complete"}
       </button>
     </motion.div>
   );
 };
 
 export default HabitDetails;
+

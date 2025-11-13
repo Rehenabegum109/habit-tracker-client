@@ -1,16 +1,45 @@
-# React + Vite
+# 🌿 My Daily Habit
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site:** [Add your live site URL here once deployed]
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##  About This Project
 
-## React Compiler
+**My Daily Habit** is a modern web application that helps users build, track, and maintain their daily habits.  
+It motivates you to stay consistent with your goals through simple daily actions and visual progress tracking.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🌟 Key Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+-  **Add & Manage Habits:** Create, update, and delete habits easily.  
+-  **Mark Complete Animation:** Beautiful success animation plays when marking a habit as complete.  
+-  **Progress Tracking:** Shows real-time progress bars and streak calculations.  
+-  **Public & Private Habits:** Users can choose to make their habits public or private.  
+-  **Interactive UI:** Smooth animations, tooltips, and user-friendly interface.  
+- **MongoDB Integration:** Backend powered by Node.js, Express.js, and MongoDB for data storage.  
+
+---
+
+##  Tech Stack
+
+**Frontend:** React.js, Tailwind CSS, Framer Motion, Lottie, React Toastify, React Tooltip  
+**Backend:** Node.js, Express.js, MongoDB  
+**Hosting:** Firebase (Client) & Render / Vercel (Server)
+
+---
+
+## API / Server URL
+
+**Server Link:** [http://localhost:3000](http://localhost:3000)
+
+(Add your deployed server link here after deployment.)
+
+---
+
+## 👩‍💻 Developer Info
+
+**Developed by:** Rehena Begum  
+ **Email:** rehenabegum999000@gmail.com  
+

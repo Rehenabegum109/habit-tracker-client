@@ -7,7 +7,7 @@ import Spinner from "../Spineer/Spineer";
 import Lottie from "lottie-react";
 import successAnimation from "../../Animation/success.json";
 import { Tooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css"; // ✅ Tooltip CSS
+import "react-tooltip/dist/react-tooltip.css"; 
 
 const MyHabits = () => {
   const { user } = useContext(AuthContext);
@@ -34,7 +34,7 @@ const MyHabits = () => {
 
   if (loading) return <Spinner />;
 
-  // 🗑️ Delete Habit
+  //  Delete Habit
   const handleDelete = async (habitId) => {
     if (!window.confirm("Are you sure you want to delete this habit?")) return;
     try {
@@ -46,8 +46,7 @@ const MyHabits = () => {
       toast.error("Failed to delete habit");
     }
   };
-
-  // ✅ Mark Complete (Lottie animation)
+  //  Mark Complete (Lottie animation)
   const handleMarkComplete = async (habit) => {
     try {
       const newStreak = (habit.currentStreak || 0) + 1;
@@ -79,7 +78,7 @@ const MyHabits = () => {
         <tbody>
           {habits.map((habit) => (
             <tr key={habit._id}>
-              {/* 🟢 Title Tooltip */}
+              {/* Title Tooltip */}
               <td className="border p-2">
                 <span
                   data-tooltip-id={`habit-${habit._id}`}
@@ -100,12 +99,12 @@ const MyHabits = () => {
               <td className="border p-2">{habit.currentStreak || 0}</td>
               <td className="border p-2">{new Date(habit.createdAt).toLocaleDateString()}</td>
 
-              {/* 🟢 Action Buttons */}
+              {/* Action Buttons */}
               <td className="border p-2 space-x-2">
-                {/* ✏️ Update */}
+                {/*  Update */}
                 <button
                   data-tooltip-id={`update-${habit._id}`}
-                  className="bg-blue-500 text-white px-2 py-1 rounded"
+                  className="bg-[#58B19F] text-white px-2 py-1 rounded"
                   onClick={() => setSelectedHabitId(habit._id)}
                 >
                   Update
@@ -114,10 +113,10 @@ const MyHabits = () => {
                   Edit this habit’s details
                 </Tooltip>
 
-                {/* 🗑️ Delete */}
+                {/*  Delete */}
                 <button
                   data-tooltip-id={`delete-${habit._id}`}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
+                  className="bg-[#58B19F] text-white px-2 py-1 rounded"
                   onClick={() => handleDelete(habit._id)}
                 >
                   Delete
@@ -126,10 +125,10 @@ const MyHabits = () => {
                   This will permanently delete this habit!
                 </Tooltip>
 
-                {/* ✅ Mark Complete */}
+                {/* Mark Complete */}
                 <button
                   data-tooltip-id={`complete-${habit._id}`}
-                  className="bg-green-500 text-white px-2 py-1 rounded"
+                  className="bg-[#58B19F] text-white px-2 py-1 rounded"
                   onClick={() => handleMarkComplete(habit)}
                 >
                   Mark Complete
@@ -143,14 +142,14 @@ const MyHabits = () => {
         </tbody>
       </table>
 
-      {/* 🎉 Success Animation Overlay */}
+      {/*Success Animation Overlay */}
       {showAnimation && (
         <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
           <Lottie animationData={successAnimation} loop={false} autoplay={true} style={{ width: 200, height: 200 }} />
         </div>
       )}
 
-      {/* ✏️ Update Habit Modal */}
+      {/*  Update Habit Modal */}
       {selectedHabitId && (
         <UpdateHabits
           habitId={selectedHabitId}
