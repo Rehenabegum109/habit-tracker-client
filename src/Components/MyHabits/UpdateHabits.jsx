@@ -13,7 +13,7 @@ const UpdateHabits = ({ habitId, onClose }) => {
   // Fetch habit data by id
   const fetchHabit = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/habits/${habitId}`);
+      const res = await axios.get(`https://habit-tracker-server-ashy.vercel.app/habits/${habitId}`);
       setHabit(res.data);
       setTitle(res.data.title);
       setDescription(res.data.description);
@@ -41,7 +41,7 @@ const UpdateHabits = ({ habitId, onClose }) => {
       photoURL
     };
     try {
-      await axios.patch(`http://localhost:3000/habits/${habitId}`, updatedHabit);
+      await axios.patch(`https://habit-tracker-server-ashy.vercel.app/habits/${habitId}`, updatedHabit);
       toast.success("Habit updated successfully!");
       onClose(); // Close modal
     } catch (err) {

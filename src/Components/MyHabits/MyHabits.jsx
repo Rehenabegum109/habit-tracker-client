@@ -38,7 +38,7 @@ const MyHabits = () => {
   const handleDelete = async (habitId) => {
     if (!window.confirm("Are you sure you want to delete this habit?")) return;
     try {
-      await axios.delete(`http://localhost:3000/habits/${habitId}`);
+      await axios.delete(`https://habit-tracker-server-ashy.vercel.app/habits/${habitId}`);
       toast.success("Habit deleted!");
       fetchHabits();
     } catch (err) {
@@ -50,7 +50,7 @@ const MyHabits = () => {
   const handleMarkComplete = async (habit) => {
     try {
       const newStreak = (habit.currentStreak || 0) + 1;
-      await axios.patch(`http://localhost:3000/habits/${habit._id}`, { currentStreak: newStreak });
+      await axios.patch(`https://habit-tracker-server-ashy.vercel.app/habits/${habit._id}`, { currentStreak: newStreak });
 
       setShowAnimation(true);
       setTimeout(() => setShowAnimation(false), 4000);

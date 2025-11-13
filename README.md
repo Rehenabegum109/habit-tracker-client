@@ -1,6 +1,6 @@
 # 🌿 My Daily Habit
 
-**Live Site:** [Add your live site URL here once deployed]
+**Live Site:**
 
 ---
 
@@ -32,7 +32,7 @@ It motivates you to stay consistent with your goals through simple daily actions
 
 ## API / Server URL
 
-**Server Link:** [http://localhost:3000](http://localhost:3000)
+**Server Link:** https://habit-tracker-server-ashy.vercel.app
 
 (Add your deployed server link here after deployment.)
 

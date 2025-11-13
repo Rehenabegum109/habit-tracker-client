@@ -15,7 +15,7 @@ const PublicHabits = () => {
   const categories = ["All", "Morning", "Work", "Fitness", "Evening", "Study"];
 
   useEffect(() => {
-    fetch("http://localhost:3000/habits/public")
+    fetch("https://habit-tracker-server-ashy.vercel.app/habits/public")
       .then((res) => res.json())
       .then((data) => {
         setHabits(data);
@@ -59,7 +59,7 @@ const PublicHabits = () => {
         Public Habits
       </h2>
 
-      {/* 🔍 Search + Filter Controls */}
+      {/* Search + Filter Controls */}
       <div className="flex flex-col md:flex-row items-center justify-between mb-6 gap-3">
         <div className="flex items-center border rounded-lg px-3 py-2 w-full md:w-1/2">
           <svg

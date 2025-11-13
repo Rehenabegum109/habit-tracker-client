@@ -18,7 +18,7 @@ const HabitDetails = () => {
   // Fetch habit by ID
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/habits/${id}`)
+      .get(`https://habit-tracker-server-ashy.vercel.app/habits/${id}`)
       .then((res) => setHabit(res.data))
       .catch(() => toast.error("Failed to load habit")); 
   }, [id]);
@@ -27,7 +27,7 @@ const HabitDetails = () => {
   const handleMarkComplete = async () => {
     setLoading(true);
     try {
-      const res = await axios.patch(`http://localhost:3000/habits/${id}/complete`);
+      const res = await axios.patch(`https://habit-tracker-server-ashy.vercel.app/habits/${id}/complete`);
 
       if (res.data.success) {
         setHabit(res.data.updatedHabit);
