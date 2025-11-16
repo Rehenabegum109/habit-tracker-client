@@ -1,20 +1,25 @@
+
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../Contexts/AuthContexts"; 
-import { toast } from "react-toastify";
 import Spinner from "../Spineer/Spineer";
+import Lottie from "lottie-react";
+import successAnimation from "../../Animation/success.json";
 
 const AddHabit = () => {
   const { user } = useContext(AuthContext); 
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Morning");
   const [reminderTime, setReminderTime] = useState("");
   const [photoURL, setPhotoURL] = useState("");
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
-      
     e.preventDefault();
 
     const habitData = {
@@ -26,32 +31,53 @@ const AddHabit = () => {
       creatorName: user?.displayName || "",
       userEmail: user?.email || "",
       public: true,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
 
     try {
-            setLoading(true);
-      await axios.post("http://localhost:3000/habits", habitData);
-      toast.success("Habit added successfully!");
+      setLoading(true);
 
+      await axios.post("https://habit-tracker-server-ashy.vercel.app/habits", habitData);
+
+      
+      setShowSuccess(true);
+
+    
+      setTimeout(() => setShowSuccess(false), 2000);
       
       setTitle("");
       setDescription("");
       setCategory("Morning");
       setReminderTime("");
       setPhotoURL("");
-          setLoading(false);
+
+      setLoading(false);
     } catch (err) {
-          setLoading(false);
-      toast.error("Failed to add habit");
+      setLoading(false);
       console.error(err);
     }
   };
-  if (loading) return <Spinner/>;
+
+  if (loading) return <Spinner />;
+
   return (
-    <div className="max-w-xl mx-auto p-4 shadow-md rounded-md ">
+    <div className="max-w-xl mx-auto p-4 shadow-md rounded-md">
+
+      
+      {showSuccess && (
+        <div className="w-full flex justify-center mb-4">
+          <Lottie 
+            animationData={successAnimation} 
+            loop={false} 
+            style={{ width: 180, height: 180 }}
+          />
+        </div>
+      )}
+
       <h2 className="text-4xl font-bold mb-4">Add a New Habit</h2>
-      <form onSubmit={handleSubmit} className="space-y-3 p-15 rounded-3xl bg-white ">
+
+      <form onSubmit={handleSubmit} className="space-y-3 p-4 rounded-3xl bg-white">
+
         <div>
           <label className="block mb-1 font-medium">Habit Title</label>
           <input
@@ -87,7 +113,8 @@ const AddHabit = () => {
             <option value="Study">Study</option>
           </select>
         </div>
-  <div>
+
+        <div>
           <label className="block mb-1 font-medium">Reminder Time</label>
           <input
             type="time"

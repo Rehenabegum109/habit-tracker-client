@@ -1,14 +1,17 @@
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import Lottie from "lottie-react";
+import successAnimation from "../../Animation/success.json";
 
-const UpdateHabits = ({ habitId, onClose }) => {
+const UpdateHabits = ({ habitId, onClose, onUpdated }) => {
   const [habit, setHabit] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [reminderTime, setReminderTime] = useState("");
   const [photoURL, setPhotoURL] = useState("");
+  const [showAnimation, setShowAnimation] = useState(false);
 
   // Fetch habit data by id
   const fetchHabit = async () => {
@@ -22,7 +25,7 @@ const UpdateHabits = ({ habitId, onClose }) => {
       setPhotoURL(res.data.photoURL);
     } catch (err) {
       console.error(err);
-      toast.error("Failed to fetch habit data");
+      alert("Failed to fetch habit data");
     }
   };
 
@@ -42,11 +45,16 @@ const UpdateHabits = ({ habitId, onClose }) => {
     };
     try {
       await axios.patch(`https://habit-tracker-server-ashy.vercel.app/habits/${habitId}`, updatedHabit);
-      toast.success("Habit updated successfully!");
-      onClose(); // Close modal
+
+      // Show success animation
+      setShowAnimation(true);
+      setTimeout(() => setShowAnimation(false), 2000);
+
+      onUpdated?.(); // refresh parent list
+      setTimeout(() => onClose(), 2000); // close modal after animation
     } catch (err) {
       console.error(err);
-      toast.error("Failed to update habit");
+      alert("Failed to update habit");
     }
   };
 
@@ -140,9 +148,16 @@ const UpdateHabits = ({ habitId, onClose }) => {
             Update Habit
           </button>
         </form>
+
+        {showAnimation && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50 rounded-lg">
+            <Lottie animationData={successAnimation} loop={false} autoplay style={{ width: 150, height: 150 }} />
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default UpdateHabits;
+
