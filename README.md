@@ -1,4 +1,5 @@
 # 🌿 My Daily Habit
+My Daily Habit – Track and manage daily habits with React, Tailwind CSS & Node.js.
 
 **Live Site:**https://poetic-flan-c66ee4.netlify.app/
 
