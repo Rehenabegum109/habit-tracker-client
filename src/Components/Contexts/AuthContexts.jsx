@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -95,3 +95,105 @@ const signup = (email, password, displayName, photoURL) => {
     </AuthContext.Provider>
   );
 };
+export const UseAuth = () => useContext(AuthContext);
+
+
+
+// // src/Components/Contexts/AuthContexts.jsx
+// import React, { createContext, useState, useEffect, useContext } from "react";
+// import {
+//   createUserWithEmailAndPassword,
+//   signInWithEmailAndPassword,
+//   signOut,
+//   onAuthStateChanged,
+//   updateProfile,
+//   GoogleAuthProvider,
+//   signInWithPopup
+// } from "firebase/auth";
+// import { auth } from "../../Firebase/firebase.config";
+
+// export const AuthContext = createContext(null);
+// const googleProvider = new GoogleAuthProvider();
+
+// export const AuthProvider = ({ children }) => {
+//   const [user, setUser] = useState(null);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+//       if (currentUser) {
+//         setUser({
+//           uid: currentUser.uid,
+//           email: currentUser.email,
+//           displayName: currentUser.displayName,
+//           photoURL: currentUser.photoURL,
+//           role: "user"
+//         });
+//       } else {
+//         setUser(null);
+//       }
+//       setLoading(false);
+//     });
+
+//     return () => unsubscribe();
+//   }, []);
+
+//   const signup = async (email, password, displayName, photoURL) => {
+//     setLoading(true);
+//     const res = await createUserWithEmailAndPassword(auth, email, password);
+//     await updateProfile(res.user, { displayName, photoURL });
+//     setUser({
+//       uid: res.user.uid,
+//       email: res.user.email,
+//       displayName,
+//       photoURL,
+//       role: "user"
+//     });
+//     setLoading(false);
+//   };
+
+//   const login = async (email, password) => {
+//     setLoading(true);
+//     const res = await signInWithEmailAndPassword(auth, email, password);
+//     setUser({
+//       uid: res.user.uid,
+//       email: res.user.email,
+//       displayName: res.user.displayName,
+//       photoURL: res.user.photoURL,
+//       role: "user"
+//     });
+//     setLoading(false);
+//     return res.user;
+//   };
+
+//   const googleLogin = async () => {
+//     setLoading(true);
+//     const res = await signInWithPopup(auth, googleProvider);
+//     setUser({
+//       uid: res.user.uid,
+//       email: res.user.email,
+//       displayName: res.user.displayName,
+//       photoURL: res.user.photoURL,
+//       role: "user"
+//     });
+//     setLoading(false);
+//     return res.user;
+//   };
+
+//   const logout = async () => {
+//     setLoading(true);
+//     await signOut(auth);
+//     setUser(null);
+//     setLoading(false);
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ user, loading, login, signup, googleLogin, logout }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };
+
+// export const UseAuth = () => useContext(AuthContext);
+
+

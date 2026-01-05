@@ -1,17 +1,18 @@
 
-import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { AuthContext, UseAuth } from "../Contexts/AuthContexts";
-import UpdateHabits from "./UpdateHabits";
-import Spinner from "../Spineer/Spineer";
+import React, { useEffect, useState } from "react";
+
+import Spinner from "../../Spineer/Spineer";
 import Lottie from "lottie-react";
-import successAnimation from "../../Animation/success.json";
+import successAnimation from "../../../Animation/success.json";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css"; 
 import { useNavigate } from "react-router";
-import useAxiosSecure from "../Hook/AxiosSecure";
+import useAxiosSecure from "../../Hook/AxiosSecure";
+import UpdateHabits from "../../MyHabits/UpdateHabits";
+import { UseAuth } from "../../Contexts/AuthContexts";
 
-const MyHabits = () => {
+
+const MyHabit = () => {
   const axiosSecure =useAxiosSecure()
   const { user } = UseAuth();
   const navigate = useNavigate();
@@ -151,5 +152,5 @@ const MyHabits = () => {
   );
 };
 
-export default MyHabits;
+export default MyHabit;
 

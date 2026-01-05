@@ -1,97 +1,159 @@
-import React, { useContext, useState } from "react";
+
+import React, {  useState, useEffect } from "react";
 import { NavLink, Link } from "react-router";
-import { AuthContext } from "../Contexts/AuthContexts";
+import { AuthContext, UseAuth } from "../Contexts/AuthContexts";
+import { FiSun, FiMoon, FiMenu, FiX } from "react-icons/fi";
 import Lottie from "lottie-react";
-import successAnimation from "../../Animation/success.json"
+import successAnimation from "../../Animation/success.json";
+import Logo from '../../assets/image/compressed_9b456a1a7049d4c0fbb26f37d05d9c88.webp';
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = UseAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
 
-  const links = (
-    <div className="flex flex-col lg:flex-row gap-5">
-      <NavLink to="/" className={({ isActive }) => isActive ? "text-black font-bold" : "hover:text-gray-600"}>Home</NavLink>
-      <NavLink to="/add-habit" className={({ isActive }) => isActive ? "text-black font-bold" : "hover:text-gray-600"}>Add Habit</NavLink>
-      <NavLink to="/my-habits" className={({ isActive }) => isActive ? "text-black font-bold" : "hover:text-gray-600"}>My Habits</NavLink>
-      <NavLink to="/public-habit" className={({ isActive }) => isActive ? "text-black font-bold" : "hover:text-gray-600"}>Public Habits</NavLink>
-    </div>
-  );
+  useEffect(() => {
+    if (darkMode) document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
+  }, [darkMode]);
 
   const handleLogout = () => {
     logout()
       .then(() => {
-        setShowAnimation(true); // Show Lottie animation
-        setTimeout(() => setShowAnimation(false), 3000); // Hide after 3s
+        setShowAnimation(true);
+        setTimeout(() => setShowAnimation(false), 3000);
       })
-      .catch((err) => console.error(err));
+      .catch(console.error);
+    setMenuOpen(false);
   };
+
+  const commonLinks = [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ];
+
+  const loggedInLinks = [
+    { name: "Dashboard", href: "/dashboard" },
+    { name: "My Habits", href: "/my-habits" },
+    { name: "Public Habits", href: "/public-habit" },
+  ];
+
+  const links = user ? [...commonLinks, ...loggedInLinks] : commonLinks;
 
   return (
     <div className="relative">
-      <div className="navbar bg-base-100 shadow-sm">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-              </svg>
+      <nav className="fixed top-0 left-0 w-full z-50 shadow-md bg-primary dark:bg-indigo-900 transition-colors">
+        <div className="max-w-full px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+          
+    
+          <div className="flex items-center gap-2">
+            <div className="lg:hidden">
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="p-2 rounded hover:bg-secondary hover:text-white transition-colors"
+              >
+                {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+              </button>
             </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow">
-              {links}
-            </ul>
+            <Link to="/" className="flex items-center gap-2 ml-2 lg:ml-0">
+              <img src={Logo} alt="Habit Tracker Logo" className="h-10 w-10" />
+              <span className="font-bold text-lg text-neutral dark:text-neutral-light">
+                Habit Tracker
+              </span>
+            </Link>
           </div>
-          <p className="btn btn-ghost text-xl text-[#F97F51]">Habit Tracker</p>
-        </div>
 
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{links}</ul>
-        </div>
+          {/* Center: Desktop Links */}
+          <div className="hidden lg:flex flex-1 justify-center gap-6 items-center">
+            {links.map((link) => (
+              <NavLink
+                key={link.name}
+                to={link.href}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-black dark:text-white font-bold"
+                    : "text-neutral dark:text-neutral-light hover:text-secondary transition-colors"
+                }
+              >
+                {link.name}
+              </NavLink>
+            ))}
+          </div>
 
-        <div className="navbar-end gap-4">
-          {user ? (
-            <>
-              <div className="flex items-center gap-3">
-                {user.photoURL ? (
-                  <img src={user.photoURL} alt="user" className="w-10 h-10 rounded-full border-2 border-blue-400" />
-                ) : (
-                  <div className="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center text-lg font-bold text-blue-700">
-                    {user.displayName?.[0] || "U"}
-                  </div>
-                )}
-                <span className="font-semibold hidden sm:block">{user.displayName || "User"}</span>
-              </div>
+          {/* Right: Dark mode + Login / Logout */}
+          <div className="flex items-center gap-4">
+            {/* Dark mode toggle */}
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2 rounded hover:bg-secondary hover:text-white transition-colors"
+            >
+              {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
+            </button>
 
+            {/* Login / Logout */}
+            {!user ? (
+              <Link
+                to="/login"
+                className="btn bg-secondary text-white font-semibold hover:bg-secondary-dark transition-colors"
+              >
+                Login
+              </Link>
+            ) : (
               <button
                 onClick={handleLogout}
-                className="btn btn-outline bg-[#58B19F] text-white font-semibold"
+                className="btn bg-red-500 text-white font-semibold hover:bg-red-600 transition-colors"
               >
                 Logout
               </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="btn btn-outline bg-[#58B19F]">Login</Link>
-              <Link to="/register" className="btn btn-outline bg-[#58B19F]">Register</Link>
-            </>
-          )}
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* ✅ Logout Success Animation */}
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="lg:hidden bg-primary dark:bg-indigo-900 transition-all animate-slide-down">
+            <div className="flex flex-col items-center p-4 gap-4">
+              {links.map((link) => (
+                <NavLink
+                  key={link.name}
+                  to={link.href}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-white font-bold"
+                      : "hover:text-white/80 transition-colors"
+                  }
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.name}
+                </NavLink>
+              ))}
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Logout Animation */}
       {showAnimation && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
-          <Lottie
-            animationData={successAnimation}
-            loop={false}
-            autoplay={true}
-            style={{ width: 200, height: 200 }}
-          />
+        <div className="fixed top-16 right-4 w-20 h-20 z-50">
+          <Lottie animationData={successAnimation} loop={false} />
         </div>
       )}
+
+      {/* Slide-down animation */}
+      <style>{`
+        @keyframes slide-down {
+          0% { opacity: 0; transform: translateY(-10px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-down {
+          animation: slide-down 0.3s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 };
 
 export default Navbar;
-
 

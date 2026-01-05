@@ -8,17 +8,19 @@ import Lottie from "lottie-react";
 import { motion } from "framer-motion";
 import Spinner from "../Spineer/Spineer";
 import successAnimation from "../../Animation/success.json";
+import useAxiosSecure from "../Hook/AxiosSecure";
 
 const HabitDetails = () => {
+  const axiosSecure =useAxiosSecure()
   const { id } = useParams();
   const [habit, setHabit] = useState(null);
   const [showAnimation, setShowAnimation] = useState(false);
   const [loading, setLoading] = useState(false);
 
+
   // Fetch habit by ID
   useEffect(() => {
-    axios
-      .get(`https://habit-tracker-server-ashy.vercel.app/habits/${id}`)
+    axiosSecure.get(`/habits/${id}`)
       .then((res) => setHabit(res.data))
       .catch(() => toast.error("Failed to load habit")); 
   }, [id]);
@@ -27,7 +29,7 @@ const HabitDetails = () => {
   const handleMarkComplete = async () => {
     setLoading(true);
     try {
-      const res = await axios.patch(`https://habit-tracker-server-ashy.vercel.app/habits/${id}/complete`);
+      const res = await axiosSecure.patch(`/habits/${id}/complete`);
 
       if (res.data.success) {
         setHabit(res.data.updatedHabit);

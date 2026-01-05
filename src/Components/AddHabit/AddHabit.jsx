@@ -1,13 +1,15 @@
 
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { AuthContext } from "../Contexts/AuthContexts"; 
+import { AuthContext, UseAuth } from "../Contexts/AuthContexts"; 
 import Spinner from "../Spineer/Spineer";
 import Lottie from "lottie-react";
 import successAnimation from "../../Animation/success.json";
+import useAxiosSecure from "../Hook/AxiosSecure";
+
 
 const AddHabit = () => {
-  const { user } = useContext(AuthContext); 
+  const { user } = UseAuth(); 
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -15,7 +17,7 @@ const AddHabit = () => {
   const [reminderTime, setReminderTime] = useState("");
   const [photoURL, setPhotoURL] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const axiosSecure =useAxiosSecure();
   
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -37,7 +39,7 @@ const AddHabit = () => {
     try {
       setLoading(true);
 
-      await axios.post("https://habit-tracker-server-ashy.vercel.app/habits", habitData);
+      await axiosSecure.post("/habits", habitData);
 
       
       setShowSuccess(true);

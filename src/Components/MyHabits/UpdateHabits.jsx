@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Lottie from "lottie-react";
 import successAnimation from "../../Animation/success.json";
+import useAxiosSecure from "../Hook/AxiosSecure";
 
 const UpdateHabits = ({ habitId, onClose, onUpdated }) => {
+  const axiosSecure =useAxiosSecure();
   const [habit, setHabit] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -16,7 +18,7 @@ const UpdateHabits = ({ habitId, onClose, onUpdated }) => {
   // Fetch habit data by id
   const fetchHabit = async () => {
     try {
-      const res = await axios.get(`https://habit-tracker-server-ashy.vercel.app/habits/${habitId}`);
+      const res = await axiosSecure.get(`/habits/${habitId}`);
       setHabit(res.data);
       setTitle(res.data.title);
       setDescription(res.data.description);
@@ -44,7 +46,7 @@ const UpdateHabits = ({ habitId, onClose, onUpdated }) => {
       photoURL
     };
     try {
-      await axios.patch(`https://habit-tracker-server-ashy.vercel.app/habits/${habitId}`, updatedHabit);
+      await axiosSecure.patch(`/habits/${habitId}`, updatedHabit);
 
       // Show success animation
       setShowAnimation(true);

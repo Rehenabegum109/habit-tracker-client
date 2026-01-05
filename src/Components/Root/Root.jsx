@@ -9,6 +9,9 @@ const Root = () => {
   
   const hideLayout =
     location.pathname !== "/" &&
+    location.pathname !== "/about" &&
+    location.pathname !== "/contact" &&
+    
     location.pathname !== "/add-habit" &&
     location.pathname !== "/my-habits" &&
     location.pathname !== "/public-habit" &&
@@ -16,9 +19,9 @@ const Root = () => {
     location.pathname !== "/register" &&
     !location.pathname.startsWith("/habit/");
     return (
-        <div className='max-w-7xl mx-auto '>
+        <div className='max-w-8xl mx-auto  '>
               {!hideLayout && <Navbar />}
-            <div className='bg-gray-300 max-h-fit '>
+            <div className='bg-primary max-h-fit '>
                 <Outlet/>
             </div>
             

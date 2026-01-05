@@ -1,13 +1,14 @@
-// src/Components/Register/Register.jsx
-import React, { useContext, useState } from "react";
+
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { AuthContext } from "../Contexts/AuthContexts";
+
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { UseAuth } from "../Contexts/AuthContexts";
  
 
 
 const Register = () => {
-  const { signup, googleLogin } = useContext(AuthContext);
+  const { signup, googleLogin } = UseAuth();
   const [error, setError] = useState("");
   const navigate = useNavigate();
    const [showPassword, setShowPassword] = useState(false);
@@ -160,3 +161,105 @@ const Register = () => {
 };
 
 export default Register;
+
+
+// import React, { useContext, useState } from "react";
+// import { Link, useNavigate } from "react-router";
+// import { AuthContext } from "../Contexts/AuthContexts";
+// import { FaEye, FaEyeSlash } from "react-icons/fa";
+// import axios from "axios";
+
+// const Register = () => {
+//   const { signup, googleLogin } = useContext(AuthContext);
+//   const [error, setError] = useState("");
+//   const [showPassword, setShowPassword] = useState(false);
+//   const navigate = useNavigate();
+
+//  const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   const name = e.target.name.value;
+//   const email = e.target.email.value;
+//   const photoURL = e.target.photoURL.value;
+//   const password = e.target.password.value;
+
+//   if (!/[A-Z]/.test(password)) return setError("Add one uppercase letter");
+//   if (!/[a-z]/.test(password)) return setError("Add one lowercase letter");
+//   if (password.length < 6) return setError("Minimum 6 characters");
+
+//   setError("");
+
+//   try {
+    
+//     const user = await signup(email, password, name, photoURL);
+//     await fetch("http://localhost:3000/register", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({
+//         name,
+//         email,
+//         photoURL,
+//         role: "user",
+//         password 
+//       }),
+//     });
+
+//     navigate("/");
+//   } catch (err) {
+//     setError(err.message);
+//   }
+// };
+
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+//       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+
+//         <h1 className="text-3xl font-bold text-center mb-4">Create Account</h1>
+
+//         <form onSubmit={handleSubmit} className="space-y-4">
+
+//           <input name="name" placeholder="Full Name" className="input input-bordered w-full" required />
+//           <input name="email" type="email" placeholder="Email" className="input input-bordered w-full" required />
+//           <input name="photoURL" placeholder="Photo URL" className="input input-bordered w-full" />
+
+//           <div className="relative">
+//             <input
+//               name="password"
+//               type={showPassword ? "text" : "password"}
+//               placeholder="Password"
+//               className="input input-bordered w-full pr-10"
+//               required
+//             />
+//             <span
+//               onClick={() => setShowPassword(!showPassword)}
+//               className="absolute right-3 top-3 cursor-pointer"
+//             >
+//               {showPassword ? <FaEyeSlash /> : <FaEye />}
+//             </span>
+//           </div>
+
+//           {error && <p className="text-red-500 text-sm">{error}</p>}
+
+//           <button className="btn w-full bg-black text-white">Sign Up</button>
+//         </form>
+
+//         <div className="divider my-6">OR</div>
+
+//         <button
+//           onClick={googleLogin}
+//           className="btn btn-outline w-full"
+//         >
+//           Continue with Google
+//         </button>
+
+//         <p className="text-center mt-4">
+//           Already have an account?
+//           <Link to="/login" className="font-semibold"> Login</Link>
+//         </p>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Register;
